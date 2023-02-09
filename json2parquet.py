@@ -4,16 +4,18 @@ from utils import parse_config, start_spark
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('-c', '--config', help='Path to the config file. Default=config.ini', required=True, default='config.ini')
+    parser.add_argument('-s', '--spark-config', help='Path to the file with the configuration for Spark.', default='spark_config.ini')
+    parser.add_argument('-j', '--json', help='Path to the file with Quotebank data in JSON format.')
+    parser.add_argument('-p', '--parquet', help='Path where Quotebank will be saved in Parquet format.')
+
     args = parser.parse_args()
 
-    config = parse_config(args.config)
+    json_path = args.json
+    parquet_path = args.parquet
+    config = parse_config(args.spark_config)
     spark = start_spark(config)
 
-    from_file = config['data']['quotes_json']
-    to_file = config['data']['quotes_parquet']
-
-    df = spark.read.json(from_file)
+    df = spark.read.json(json_path)
     columns = df.columns
 
     if 'date' in columns:
@@ -23,6 +25,6 @@ if __name__ == '__main__':
                        date_format('date', 'yyyy').alias('year'),
                        date_format('date', 'MM').alias('month'))
         
-        df.repartition('year', 'month').write.mode('overwrite').partitionBy('year', 'month').parquet(to_file)
+        df.repartition('year', 'month').write.mode('overwrite').partitionBy('year', 'month').parquet(parquet_path)
     else:
-        df.write.mode('overwrite').parquet(to_file)
+        df.write.mode('overwrite').parquet(parquet_path)
