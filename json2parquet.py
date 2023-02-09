@@ -4,7 +4,7 @@ from utils import parse_config, start_spark
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('-s', '--spark-config', help='Path to the file with the configuration for Spark.', default='spark_config.ini')
+    parser.add_argument('-s', '--spark-config', help='Path to the file with the configuration for Spark.', default='config.ini')
     parser.add_argument('-j', '--json', help='Path to the file with Quotebank data in JSON format.')
     parser.add_argument('-p', '--parquet', help='Path where Quotebank will be saved in Parquet format.')
 
