@@ -10,13 +10,10 @@ def is_date(string: str) -> bool:
     """
     Returns true if the input string can be parsed to a date. Works for filtering non-date quotations.
     With help from: https://stackoverflow.com/questions/25341945/check-if-string-has-date-any-format
-    Parameters
-    ----------
-    string: Arbitrary input string
-    Returns
-    -------
-    Boolean indicator for "is string a date?".
+    :param string: Arbitrary input string
+    :return: Boolean indicator for "is string a date?"
     """
+
     try:
         parseDate(string, fuzzy=False, ignoretz=True)
         return True
@@ -53,18 +50,31 @@ def start_spark(config):
 
 
 def __URL2domain(url):
-    """Trims the URL and leaves only the root domain."""
+    """
+    Trims a URL and leaves only the root domain.
+    :param url: URL string.
+    :return: Domain extracted from the URL string.
+    """
+
     ret = get_tld(url, as_object=True)
     return ret.domain + '.' + ret.tld
 
 
 @f.udf(t.ArrayType(t.StringType()))
 def URLs2domain(urls):
-    """Trims a list of URLs and leaves only the root domains."""
+    """
+    Trims a list of URLs and leaves only the root domains.
+    :param urls: List of URL strings.
+    :return: List of domains extracted from the URL strings.
+    """
     return [__URL2domain(url) for url in urls]
 
-
 def parse_config(config_path):
+    """
+    Parses the config file specified by its location.
+    :param config_path: Location of the config file to be parsed.
+    :return: Parsed config file.
+    """
     config = configparser.ConfigParser()
     config.read(config_path)
     return config
