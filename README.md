@@ -105,7 +105,7 @@ python cleanup_disambiguate.py \
 	--output data/quotes_clean_parquet \
 	--input_format parquet \
 	--output_format parquet \
-	--disambiguation-mapping data/quotebank_disambiguation_mapping_quote \
+	--disambiguation-mapping data/quotebank_disambiguation_mapping_quote.parquet \
 	--self-quotations-filtered data/self_quotations_filtered.parquet \
 	--blacklists data/blacklists \
 	--min-quotation-length 5
