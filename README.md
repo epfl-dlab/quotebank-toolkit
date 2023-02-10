@@ -8,7 +8,7 @@ This repository contains scripts utility for preprocessing Quotebank. Currently,
 ```
 git clone https://www.github.com/epfl-dlab/quotoolbox
 ```
-or, if you have an ssh key set up with GitHub, running
+or, if you have an ssh key set up with GitHub, by running
 ```
 git clone git@github.com:epfl-dlab/quotoolbox
 ```
