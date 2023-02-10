@@ -20,7 +20,7 @@ cd quotoolbox
 4. Download the data required to run the scripts. The data is available on [drive](https://drive.google.com/file/d/1svi0ILAL9JIZ9llncSOlTqfZTYbpCLe0/view?usp=sharing).
 5. Unzip the data into `quotoolbox/data`.
 6. You can run the scripts in a Conda environment or a Docker container. If you want to run the scripts in a Conda environment, please see [Conda environment instructions](#conda-environment-instructions). Otherwise, see [Docker container instructions](#docker-container-instructions).
-7. For the details about the scripts and their respective arguments, please see [Script specific instructions](#script-specific-instructions).
+7. For the details about the scripts and their respective arguments, please see [Script-specific instructions](#script-specific-instructions).
 
 ### Conda environment instructions
 1. Install [Anaconda](https://www.anaconda.com/products/distribution#download-section) (64-bit Python 3.9 version)
