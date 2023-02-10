@@ -30,7 +30,7 @@ conda env create -f quotoolbox.yml
 ```
 4. Activate the installed environment
 ```
-conda activate el
+conda activate quotoolbox
 ```
 
 ### Docker container instructions 
