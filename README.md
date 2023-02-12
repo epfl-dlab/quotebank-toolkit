@@ -118,7 +118,7 @@ To sum up, `cleanup_disambiguate.py` performs the following preprocessing steps:
 	- that can be barsed as a date
 	- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/name_blacklist.txt))
 	- that appear only on domains identified as faulty (see [data/blacklists/domain_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/domain_blacklist.txt))
-	- mentioning the speaker to which they attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
+	- mentioning the speaker to which they are attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
 - speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`. Due to the size of the dataset, speaker disambiguation is performed using lightweight heuristics [2].
 
 ## References
