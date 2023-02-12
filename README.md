@@ -1,5 +1,5 @@
 # quotoolbox
-This repository contains scripts utility for preprocessing [Quotebank](https://zenodo.org/record/4277311). Currently, two scripts are available:
+This repository contains scripts utility for preprocessing [Quotebank](https://zenodo.org/record/4277311)[1]. Currently, two scripts are available:
 - `json2parquet.py` - converts Quotebank data stored in JSON format to parquet format. Parquet files are faster to load, making data exploration significantly more convenient. For details about the Parquet format, see [the official documentation](https://parquet.apache.org/docs/).
 - `cleanup_disambiguate.py` - performs basic cleanup of the quotation-level Quotebank data and assigns a Wikidata QID to the respective speaker of each quotation. In other words, the script links each attributed speaker to its corresponding Wikidata item,  making Wikidata's rich knowledge usable for analyses.
 ## Usage instructions
@@ -119,7 +119,10 @@ To sum up, `cleanup_disambiguate.py` performs the following preprocessing steps:
 	- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/name_blacklist.txt))
 	- that appear only on domains identified as faulty (see [data/blacklists/domain_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/domain_blacklist.txt))
 	- mentioning the speaker to which they attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
-- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`.
+- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`. Due to the size of the dataset, speaker disambiguation is performed using lightweight heuristics [2].
 
+## References
+[1] Timoté Vaucher, Andreas Spitz, Michele Catasta, and Robert West. “Quotebank: A Corpus of Quotations from a Decade of News”. In Proceedings of the 14th ACM International Conference on Web Search and Data Mining. 2021.
 
+[2] Marko Čuljak, Andreas Spitz, Robert West, Akhil Arora. “Strong Heuristics for Named Entity Linking”. In Proceedings 2022 Conference of the North American Chapter of the Association for Compuational Linguistics: Student Research Workshop.
 
