@@ -2,7 +2,6 @@
 This repository contains scripts utility for preprocessing [Quotebank](https://zenodo.org/record/4277311). Currently, two scripts are available:
 - `json2parquet.py` - converts Quotebank data stored in JSON format to parquet format. Parquet files are faster to load, making data exploration significantly more convenient. For details about the Parquet format, see [the official documentation](https://parquet.apache.org/docs/).
 - `cleanup_disambiguate.py` - performs basic cleanup of the quotation-level Quotebank data and assigns a Wikidata QID to the respective speaker of each quotation. In other words, the script links each attributed speaker to its corresponding Wikidata item,  making Wikidata's rich knowledge usable for analyses.
- 
 ## Usage instructions
 1. Clone this repository by running
 ```
@@ -25,6 +24,7 @@ cd quotoolbox
 ### Conda environment instructions
 1. Install [Anaconda](https://www.anaconda.com/products/distribution#download-section) (64-bit Python 3.9 version)
 2. Setup the virtual environment named `quotoolbox` to install all the required dependencies by running the command
+
 ```
 conda env create -f quotoolbox.yml
 ```
@@ -34,7 +34,7 @@ conda activate quotoolbox
 ```
 
 ### Docker container instructions 
-1. Install [Docker](https://docs.docker.com/get-docker/)
+1. Install [Docker](https://docs.docker.com/get-docker/).
 2. Pull the Quotoolbox Docker image `maculjak/quotoolbox` from DockerHub by running
 ```
 docker pull maculjak/quotoolbox
@@ -89,12 +89,12 @@ python cleanup_disambiguate.py \
 - `SPARK_CONFIG` - Path to the file with the configuration for a Spark session. For details, please see the instructions for `json2parquet.py` .  
 - `INPUT` - Path to the original quotation-level Quotebank data.
 - `OUTPUT` - Path where clean quotation-level Quotebank data will be written.
-- `INPUT_FORMAT` - Format of the input data. (e.g., `json` or `parquet`)
-- `OUTPUT_FORMAT` - Format of the output data. (e.g., `json` or `parquet`)
+- `INPUT_FORMAT` - Format of the input data. (e.g., `json`, `parquet`, etc.)
+- `OUTPUT_FORMAT` - Format of the output data. (e.g., `json`, `parquet` etc.)
 - `DISAMBIGUATION_MAPPING` - Path to the `quoteID` $\rightarrow$ `speakerQID` mapping.
 - `SELF_QUOTATIONS_FILTERED` - Path to the data containing quoteIDs of quotations that are not self-attributed. Self-attributed quotations are mostly falsely attributed and should be removed.
 - `BLACKLISTS` - Path to the folder containing name and domain blacklists used for filtering quotations appearing only on spurious domains or attributed to speakers with spurious names.
-- `COMPRESSION` - Compression algorithm used to compress the resulting data. If not specified, the data will not be compressed.
+- `COMPRESSION` - Compression algorithm (e.g., `bz2`, gzip, etc.) used to compress the resulting data. If not specified, the data will not be compressed.
 - `MIN_QUOTATION_LENGTH` - Minimum quotation length in Penn Treebank tokens. Extremely short quotations are usually noise and should be removed. The recommended value for this argument is `5`. Since tokenization is the most computationally expensive operation performed by this script, not removing short quotations by setting this argument to `0` will drastically speed up the runtime.
 
 For example:
@@ -105,9 +105,21 @@ python cleanup_disambiguate.py \
 	--output data/quotes_clean_parquet \
 	--input_format parquet \
 	--output_format parquet \
-	--disambiguation-mapping data/quotebank_disambiguation_mapping_quote.parquet \
-	--self-quotations-filtered data/self_quotations_filtered.parquet \
+	--disambiguation-mapping data/quotebank_disambiguation_mapping \
+	--self-quotations-filtered data/self_quotations_filtered \
 	--blacklists data/blacklists \
 	--min-quotation-length 5
 ```
-This command will use the Spark session configuration specified in `config.ini`, read the quotes stored in Parquet format in `data/quotes_parquet`, and write the resulting data in Parquet format to `data/quotes_clean_parquet`. For speaker disambiguation and self-quotation removal, the data from `data/quotebank_disambiguation_mapping_quote` and `data/self_quotations_filtered.parquet` will be used, respectively. The blacklists will be loaded from `data/blacklists`, while all the quotations with less than 5 Penn Treebank tokens will be removed.
+This command will use the Spark session configuration specified in `config.ini`, read the quotes stored in Parquet format in `data/quotes_parquet`, and write the resulting data in Parquet format to `data/quotes_clean_parquet`. For speaker disambiguation and self-quotation removal, the data from `data/quotebank_disambiguation_mapping_quote` and `data/self_quotations_filtered.parquet` will be used, respectively. The blacklists will be loaded from `data/blacklists`, while all the quotations with less than 5 Penn Treebank tokens will be removed. The resulting dataset will not be compressed as nothing was passed to the `compression` argument.
+
+To sum up, `cleanup_disambiguate.py` performs the following preprocessing steps:
+- removal of the quotes
+	- attributed to no speaker
+	- that can be barsed as a date
+	- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/name_blacklist.txt))
+	- that appear only on domains identified as faulty (see [data/blacklists/domain_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/domain_blacklist.txt))
+	- mentioning the speaker to which they attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
+- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`.
+
+
+
