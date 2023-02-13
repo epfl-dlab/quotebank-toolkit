@@ -121,6 +121,8 @@ To sum up, `cleanup_disambiguate.py` performs the following preprocessing steps:
 	- mentioning the speaker to which they are attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
 - speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`. Due to the size of the dataset, speaker disambiguation is performed using lightweight heuristics [2].
 
+Note that the proposed preprocessing steps cannot clean up Quotenank entirely and a portion of faulty and falsely attributed quotatinos will reamin in the dataset.
+
 ## References
 [1] Timoté Vaucher, Andreas Spitz, Michele Catasta, and Robert West. “Quotebank: A Corpus of Quotations from a Decade of News”. In Proceedings of the 14th ACM International Conference on Web Search and Data Mining. 2021.
 
