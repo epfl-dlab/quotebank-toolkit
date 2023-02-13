@@ -1,7 +1,7 @@
 # quotoolbox
 This repository contains scripts utility for preprocessing [Quotebank](https://zenodo.org/record/4277311) [1]. Currently, two scripts are available:
-- `json2parquet.py` - converts Quotebank data stored in JSON format to parquet format. Parquet files are faster to load, making data exploration significantly more convenient. For details about the Parquet format, see [the official documentation](https://parquet.apache.org/docs/).
-- `cleanup_disambiguate.py` - performs basic cleanup of the quotation-level Quotebank data and assigns a Wikidata QID to the respective speaker of each quotation. In other words, the script links each attributed speaker to its corresponding Wikidata item,  making Wikidata's rich knowledge usable for analyses.
+- [`json2parquet.py`](#json2parquetpy) - converts Quotebank data stored in JSON format to parquet format. Parquet files are faster to load, making data exploration significantly more convenient. For details about the Parquet format, see [the official documentation](https://parquet.apache.org/docs/).
+- [`cleanup_disambiguate.py`](#cleanup_disambiguatepy) - performs basic cleanup of the quotation-level Quotebank data and assigns a Wikidata QID to the respective speaker of each quotation. In other words, the script links each attributed speaker to its corresponding Wikidata item,  making Wikidata's rich knowledge usable for analyses.
 ## Usage instructions
 1. Clone this repository by running
 ```
