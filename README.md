@@ -1,7 +1,15 @@
 # quotoolbox
-This repository contains scripts utility for preprocessing [Quotebank](https://zenodo.org/record/4277311) [1]. Currently, two scripts are available:
+This repository contains utility scripts for preprocessing [Quotebank](https://zenodo.org/record/4277311) [1]. Currently, two scripts are available:
 - [`json2parquet.py`](#json2parquetpy) - converts Quotebank data stored in JSON format to parquet format. Parquet files are faster to load, making data exploration significantly more convenient. For details about the Parquet format, see [the official documentation](https://parquet.apache.org/docs/).
-- [`cleanup_disambiguate.py`](#cleanup_disambiguatepy) - performs basic cleanup of the quotation-level Quotebank data and assigns a Wikidata QID to the respective speaker of each quotation. In other words, the script links each attributed speaker to its corresponding Wikidata item,  making Wikidata's rich knowledge usable for analyses.
+- [`cleanup_disambiguate.py`](#cleanup_disambiguatepy) - performs basic cleanup of the quotation-level Quotebank data and assigns a Wikidata QID to the respective speaker of each quotation. In other words, the script links each attributed speaker to its corresponding Wikidata item,  making Wikidata's rich knowledge usable for analyses. To be more specific, `cleanup_disambiguate.py` performs the following preprocessing steps:
+- removal of the quotes
+	- attributed to no speaker
+	- that can be parsed as a date
+	- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/name_blacklist.txt))
+	- that appear only on domains identified as faulty (see [data/blacklists/domain_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/domain_blacklist.txt))
+	- mentioning the speaker to which they are attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
+	- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`. Due to the size of the dataset, speaker disambiguation mapping has been obtained using lightweight heuristics [2].
+	
 ## Usage instructions
 1. Clone this repository by running
 ```
@@ -59,7 +67,7 @@ python json2parquet.py \
         --json JSON_DATA \
         --parquet PARQUET_DATA
 ```
-- `SPARK_CONFIG` - Path to the file configuring a Spark session. For details about configuring Spark sessions, please see [the official documentation](https://spark.apache.org/docs/latest/configuration.html#application-properties). This should provide you with enough information to configure the Spark sessions according to your needs. Note that you can add additional options to the config file according to the [Application properties table](https://spark.apache.org/docs/latest/configuration.html#application-properties) in the documentation. The only option in the provided config file not mentioned in the official documentation is `num_threads`, whose name is self-explanatory. It merely sets the maximum number of processor threads usable by the script.
+- `SPARK_CONFIG` - Path to the file configuring a Spark session. For details about configuring Spark sessions, please see [the official documentation](https://spark.apache.org/docs/latest/configuration.html#application-properties). This should provide you with enough information to configure the Spark sessions according to your needs. You can add options to the config file according to the [Application properties table](https://spark.apache.org/docs/latest/configuration.html#application-properties) in the documentation. The only option in the provided config file not mentioned in the official documentation is `num_threads`, whose name is self-explanatory. It merely sets the maximum number of processor threads usable by the script.
 - `JSON_DATA` - Path to the file with Quotebank data in JSON format.
 - `PARQUET_DATA` - Path where Quotebank will be saved in Parquet format.
 For example:
@@ -110,21 +118,10 @@ python cleanup_disambiguate.py \
 	--blacklists data/blacklists \
 	--min-quotation-length 5
 ```
-This command will use the Spark session configuration specified in `config.ini`, read the quotes stored in Parquet format in `data/quotes_parquet`, and write the resulting data in Parquet format to `data/quotes_clean_parquet`. For speaker disambiguation and self-quotation removal, the data from `data/quotebank_disambiguation_mapping_quote` and `data/self_quotations_filtered.parquet` will be used, respectively. The blacklists will be loaded from `data/blacklists`, while all the quotations with less than 5 Penn Treebank tokens will be removed. The resulting dataset will not be compressed as nothing was passed to the `compression` argument.
-
-To sum up, `cleanup_disambiguate.py` performs the following preprocessing steps:
-- removal of the quotes
-	- attributed to no speaker
-	- that can be barsed as a date
-	- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/name_blacklist.txt))
-	- that appear only on domains identified as faulty (see [data/blacklists/domain_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/domain_blacklist.txt))
-	- mentioning the speaker to which they are attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
-- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`. Due to the size of the dataset, speaker disambiguation is performed using lightweight heuristics [2].
-
-Note that the proposed preprocessing steps cannot clean up Quotenank entirely and a portion of faulty and falsely attributed quotatinos will reamin in the dataset.
+This command will use the Spark session configuration specified in `config.ini`, read the quotes stored in Parquet format in `data/quotes_parquet`, and write the resulting data in Parquet format to `data/quotes_clean_parquet`. For speaker disambiguation and self-quotation removal, the data from `data/quotebank_disambiguation_mapping_quote` and `data/self_quotations_filtered.parquet` will be used, respectively. The blacklists will be loaded from `data/blacklists`, while all the quotations with less than 5 Penn Treebank tokens will be removed. The resulting dataset will not be compressed as nothing was passed to the `compression` argument. Note that the proposed preprocessing steps can only clean up Quotenank partially, and a portion of faulty and falsely attributed quotations will remain in the dataset.
 
 ## References
 [1] Timoté Vaucher, Andreas Spitz, Michele Catasta, and Robert West. “Quotebank: A Corpus of Quotations from a Decade of News”. In Proceedings of the 14th ACM International Conference on Web Search and Data Mining. 2021.
 
-[2] Marko Čuljak, Andreas Spitz, Robert West, Akhil Arora. “Strong Heuristics for Named Entity Linking”. In Proceedings 2022 Conference of the North American Chapter of the Association for Compuational Linguistics: Student Research Workshop.
+[2] Marko Čuljak, Andreas Spitz, Robert West, Akhil Arora. “Strong Heuristics for Named Entity Linking”. In Proceedings 2022 Conference of the North American Chapter of the Association for Computational Linguistics: Student Research Workshop.
 
