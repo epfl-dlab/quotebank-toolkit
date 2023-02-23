@@ -2,14 +2,14 @@
 This repository contains utility scripts for preprocessing [Quotebank](https://zenodo.org/record/4277311) [1]. Currently, two scripts are available:
 - [`json2parquet.py`](#json2parquetpy) - converts Quotebank data stored in JSON format to parquet format. Parquet files are faster to load, making data exploration significantly more convenient. For details about the Parquet format, see [the official documentation](https://parquet.apache.org/docs/).
 - [`cleanup_disambiguate.py`](#cleanup_disambiguatepy) - performs basic cleanup of the quotation-level Quotebank data and assigns a Wikidata QID to the respective speaker of each quotation. In other words, the script links each attributed speaker to its corresponding Wikidata item,  making Wikidata's rich knowledge usable for analyses. To be more specific, `cleanup_disambiguate.py` performs the following preprocessing steps:
-- removal of the quotes
-	- attributed to no speaker
-	- that can be parsed as a date
-	- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/name_blacklist.txt))
-	- that appear only on domains identified as faulty (see [data/blacklists/domain_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/domain_blacklist.txt))
-	- mentioning the speaker to which they are attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
-	- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`. Due to the size of the dataset, speaker disambiguation mapping has been obtained using lightweight heuristics [2].
-	
+	- removal of the quotes
+		- attributed to no speaker
+		- that can be parsed as a date
+		- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/name_blacklist.txt))
+		- that appear only on domains identified as faulty (see [data/blacklists/domain_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/domain_blacklist.txt))
+		- mentioning the speaker to which they are attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
+		- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`. Due to the size of the dataset, speaker disambiguation mapping has been obtained using lightweight heuristics [2].
+
 ## Usage instructions
 1. Clone this repository by running
 ```
