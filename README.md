@@ -102,7 +102,7 @@ python cleanup_disambiguate.py \
 - `DISAMBIGUATION_MAPPING` - Path to the `quoteID` $\rightarrow$ `speakerQID` mapping.
 - `SELF_QUOTATIONS_FILTERED` - Path to the data containing quoteIDs of quotations that are not self-attributed. Self-attributed quotations are mostly falsely attributed and should be removed.
 - `BLACKLISTS` - Path to the folder containing name and domain blacklists used for filtering quotations appearing only on spurious domains or attributed to speakers with spurious names.
-- `COMPRESSION` - Compression algorithm (e.g., `bz2`, gzip, etc.) used to compress the resulting data. If not specified, the data will not be compressed.
+- `COMPRESSION` - Compression algorithm (e.g., `bz2`, `gzip`, etc.) used to compress the resulting data. If not specified, the data will not be compressed.
 - `MIN_QUOTATION_LENGTH` - Minimum quotation length in Penn Treebank tokens. Extremely short quotations are usually noise and should be removed. The recommended value for this argument is `5`. Since tokenization is the most computationally expensive operation performed by this script, not removing short quotations by setting this argument to `0` will drastically speed up the runtime.
 
 For example:
