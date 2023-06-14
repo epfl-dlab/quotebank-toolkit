@@ -1,8 +1,8 @@
-# quotoolbox
+# quotebank-toolkit
 This repository contains utility scripts for preprocessing [Quotebank](https://zenodo.org/record/4277311) [1]. Currently, two scripts are available:
 - [`json2parquet.py`](#json2parquetpy) - converts Quotebank data stored in JSON format to parquet format. Parquet files are faster to load, making data exploration significantly more convenient. For details about the Parquet format, see [the official documentation](https://parquet.apache.org/docs/).
-- [`cleanup_disambiguate.py`](#cleanup_disambiguatepy) - performs basic cleanup of the quotation-level Quotebank data and assigns a Wikidata QID to the respective speaker of each quotation. In other words, the script links each attributed speaker to its corresponding Wikidata item,  making Wikidata's rich knowledge usable for analyses. To be more specific, `cleanup_disambiguate.py` performs the following preprocessing steps:
-	- removal of the quotes
+- [`cleanup_disambiguate.py`](#cleanup_disambiguatepy) - performs basic cleanup of the quotation-centric Quotebank data and assigns a Wikidata QID to the respective speaker of each quotation. In other words, the script links each attributed speaker to its corresponding Wikidata item, making Wikidata's rich knowledge usable for further analyses. To be more specific, `cleanup_disambiguate.py` performs the following preprocessing steps:
+	- removal of the quotes that meet the following conditions:
 		- attributed to no speaker
 		- that can be parsed as a date
 		- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/name_blacklist.txt))
@@ -13,19 +13,19 @@ This repository contains utility scripts for preprocessing [Quotebank](https://z
 ## Usage instructions
 1. Clone this repository by running
 ```
-git clone https://www.github.com/epfl-dlab/quotoolbox
+git clone https://www.github.com/epfl-dlab/quotebank-toolkit
 ```
 or, if you have an ssh key set up with GitHub, by running
 ```
-git clone git@github.com:epfl-dlab/quotoolbox
+git clone git@github.com:epfl-dlab/quotebank-toolkit
 ```
 2. Position yourself inside the repository by running
 ```
-cd quotoolbox
+cd quotebank-toolkit
 ```
-3. Download the quotation-level Quotebank from [Zenodo](https://zenodo.org/record/4277311) into `data/quotes`. You only need to download the files whose name follows the format `quotes-YYYY.json.bz2`. 
+3. Download the quotation-centric Quotebank from [Zenodo](https://zenodo.org/record/4277311) into `data/quotes`. You only need to download the files whose name follows the format `quotes-YYYY.json.bz2`. 
 4. Download the data required to run the scripts. The data is available on [drive](https://drive.google.com/file/d/1svi0ILAL9JIZ9llncSOlTqfZTYbpCLe0/view?usp=sharing).
-5. Unzip the data into `quotoolbox/data`.
+5. Unzip the data into `quotebank-toolkit/data`.
 6. You can run the scripts in a Conda environment or a Docker container. If you want to run the scripts in a Conda environment, please see [Conda environment instructions](#conda-environment-instructions). Otherwise, see [Docker container instructions](#docker-container-instructions).
 7. For the details about the scripts and their respective arguments, please see [Script-specific instructions](#script-specific-instructions).
 
@@ -52,9 +52,9 @@ docker pull maculjak/quotoolbox
 docker run -it -v $(pwd):/quotoolbox maculjak/quotoolbox
 ```
 This command will run the container and start a new `bash` shell inside it with all the dependencies installed. The folder `quotoolbox` will be created inside the container and bind it with the current working directory. This will make the scripts and data accessible from the container.
-4. Position yourself inside the `quotoolbox` directory by running
+4. Position yourself inside the `quotebank-toolkit` directory by running
 ```
-cd quotoolbox
+cd quotebank-toolkit
 ```
 
 ### Script-specific instructions
@@ -95,8 +95,8 @@ python cleanup_disambiguate.py \
 	--min-quotation-length MIN_QUOTATION_LENGTHS
 ```
 - `SPARK_CONFIG` - Path to the file with the configuration for a Spark session. For details, please see the instructions for `json2parquet.py` .  
-- `INPUT` - Path to the original quotation-level Quotebank data.
-- `OUTPUT` - Path where clean quotation-level Quotebank data will be written.
+- `INPUT` - Path to the original quotation-centric Quotebank data.
+- `OUTPUT` - Path where clean quotation-centric Quotebank data will be written.
 - `INPUT_FORMAT` - Format of the input data. (e.g., `json`, `parquet`, etc.)
 - `OUTPUT_FORMAT` - Format of the output data. (e.g., `json`, `parquet` etc.)
 - `DISAMBIGUATION_MAPPING` - Path to the `quoteID` $\rightarrow$ `speakerQID` mapping.
