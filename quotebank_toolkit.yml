@@ -1,4 +1,4 @@
-name: quotebank-toolbox
+name: quotebank-toolkit
 channels:
   - defaults
 dependencies:
