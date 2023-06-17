@@ -5,8 +5,8 @@ This repository contains utility scripts for preprocessing [Quotebank](https://z
 	- removal of the quotes that meet the following conditions:
 		- attributed to no speaker
 		- that can be parsed as a date
-		- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/name_blacklist.txt))
-		- that appear only on domains identified as faulty (see [data/blacklists/domain_blacklist.txt](https://github.com/epfl-dlab/quotoolbox/blob/main/data/blacklists/domain_blacklist.txt))
+		- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/data/blacklists/name_blacklist.txt))
+		- that appear only on domains identified as faulty (see [data/blacklists/domain_blacklist.txt](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/data/blacklists/domain_blacklist.txt))
 		- mentioning the speaker to which they are attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
 	- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`. Due to the size of the dataset, speaker disambiguation mapping has been obtained using lightweight heuristics [2].
 
@@ -25,33 +25,33 @@ cd quotebank-toolkit
 ```
 3. Download the quotation-centric Quotebank from [Zenodo](https://zenodo.org/record/4277311) into `data/quotes`. You only need to download the files whose name follows the format `quotes-YYYY.json.bz2`. 
 4. Download the data required to run the scripts. The data is available on [drive](https://drive.google.com/file/d/1svi0ILAL9JIZ9llncSOlTqfZTYbpCLe0/view?usp=sharing).
-5. Unzip the data into `quotebank-toolkit/data`.
+5. Unzip the data into `data`.
 6. You can run the scripts in a Conda environment or a Docker container. If you want to run the scripts in a Conda environment, please see [Conda environment instructions](#conda-environment-instructions). Otherwise, see [Docker container instructions](#docker-container-instructions).
 7. For the details about the scripts and their respective arguments, please see [Script-specific instructions](#script-specific-instructions).
 
 ### Conda environment instructions
 1. Install [Anaconda](https://www.anaconda.com/products/distribution#download-section) (64-bit Python 3.9 version)
-2. Setup the virtual environment named `quotoolbox` to install all the required dependencies by running the command
+2. Setup the virtual environment named `quotebank-toolkit` to install all the required dependencies by running the command
 
 ```
-conda env create -f quotoolbox.yml
+conda env create -f quotebank_toolkit.yml
 ```
 4. Activate the installed environment
 ```
-conda activate quotoolbox
+conda activate quotebank-toolkit
 ```
 
 ### Docker container instructions 
 1. Install [Docker](https://docs.docker.com/get-docker/).
-2. Pull the Quotoolbox Docker image `maculjak/quotoolbox` from DockerHub by running
+2. Pull the `maculjak/quotebank-toolkit` Docker image  from DockerHub by running
 ```
-docker pull maculjak/quotoolbox
+docker pull maculjak/quotebank-toolkit
 ```
-3. Run the Quotoolbox Docker container by running
+3. Run the Docker container by using
 ```
-docker run -it -v $(pwd):/quotoolbox maculjak/quotoolbox
+docker run -it -v $(pwd):/quotebank-toolkit maculjak/quotebank-toolkit
 ```
-This command will run the container and start a new `bash` shell inside it with all the dependencies installed. The folder `quotoolbox` will be created inside the container and bind it with the current working directory. This will make the scripts and data accessible from the container.
+This command will run the container and start a new `bash` shell inside it with all the dependencies installed. The folder `quotebank-toolkit` will be created inside the container and bind it with the current working directory. This will make the scripts and data accessible from the container.
 4. Position yourself inside the `quotebank-toolkit` directory by running
 ```
 cd quotebank-toolkit
@@ -69,7 +69,7 @@ python json2parquet.py \
 ```
 - `SPARK_CONFIG` - Path to the file configuring a Spark session. For details about configuring Spark sessions, please see [the official documentation](https://spark.apache.org/docs/latest/configuration.html#application-properties). This should provide you with enough information to configure the Spark sessions according to your needs. You can add options to the config file according to the [Application properties table](https://spark.apache.org/docs/latest/configuration.html#application-properties) in the documentation. The only option in the provided config file not mentioned in the official documentation is `num_threads`, whose name is self-explanatory. It merely sets the maximum number of processor threads usable by the script.
 - `JSON_DATA` - Path to the file with Quotebank data in JSON format.
-- `PARQUET_DATA` - Path where Quotebank will be saved in Parquet format.
+- `PARQUET_DATA` - Path where Quotebank will be saved in Parquet format.  
 For example:
 ```
 python json2parquet.py \
