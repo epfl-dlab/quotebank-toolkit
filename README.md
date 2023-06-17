@@ -69,7 +69,8 @@ python json2parquet.py \
 ```
 - `SPARK_CONFIG` - Path to the file configuring a Spark session. For details about configuring Spark sessions, please see [the official documentation](https://spark.apache.org/docs/latest/configuration.html#application-properties). This should provide you with enough information to configure the Spark sessions according to your needs. You can add options to the config file according to the [Application properties table](https://spark.apache.org/docs/latest/configuration.html#application-properties) in the documentation. The only option in the provided config file not mentioned in the official documentation is `num_threads`, whose name is self-explanatory. It merely sets the maximum number of processor threads usable by the script.
 - `JSON_DATA` - Path to the file with Quotebank data in JSON format.
-- `PARQUET_DATA` - Path where Quotebank will be saved in Parquet format.  
+- `PARQUET_DATA` - Path where Quotebank will be saved in Parquet format. 
+
 For example:
 ```
 python json2parquet.py \
