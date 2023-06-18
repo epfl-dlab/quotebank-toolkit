@@ -1,4 +1,4 @@
-name: quotoolbox
+name: quotebank-toolkit
 channels:
   - defaults
 dependencies:
@@ -93,5 +93,4 @@ dependencies:
     - setuptools==65.6.3
     - tld==0.12.7
     - tqdm==4.64.1
-prefix: /dlabdata1/culjak/quotoolbox/.conda/envs/quotoolbox
 
