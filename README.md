@@ -5,8 +5,8 @@ This repository contains utility scripts for preprocessing [Quotebank](https://z
 	- removal of the quotes that meet the following conditions:
 		- attributed to no speaker
 		- that can be parsed as a date
-		- where the speaker name is identified as spurious (see [data/blacklists/name_blacklist.txt](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/data/blacklists/name_blacklist.txt))
-		- that appear only on domains identified as faulty (see [data/blacklists/domain_blacklist.txt](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/data/blacklists/domain_blacklist.txt))
+		- where the speaker name is identified as spurious (see [`data/blacklists/name_blacklist.txt`](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/data/blacklists/name_blacklist.txt))
+		- that appear only on domains identified as faulty (see [`data/blacklists/domain_blacklist.txt`](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/data/blacklists/domain_blacklist.txt))
 		- mentioning the speaker to which they are attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
 	- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping`. Due to the size of the dataset, speaker disambiguation mapping has been obtained using lightweight heuristics [2].
 
@@ -24,7 +24,7 @@ git clone git@github.com:epfl-dlab/quotebank-toolkit
 cd quotebank-toolkit
 ```
 3. Download the quotation-centric Quotebank from [Zenodo](https://zenodo.org/record/4277311) into `data/quotes`. You only need to download the files whose name follows the format `quotes-YYYY.json.bz2`. 
-4. Download the data required to run the scripts. The data is available on [drive](https://drive.google.com/file/d/1svi0ILAL9JIZ9llncSOlTqfZTYbpCLe0/view?usp=sharing).
+4. Download the data required to run the scripts. The data is available on [Zenodo](https://zenodo.org/deposit/8033673).
 5. Unzip the data into `data`.
 6. You can run the scripts in a Conda environment or a Docker container. If you want to run the scripts in a Conda environment, please see [Conda environment instructions](#conda-environment-instructions). Otherwise, see [Docker container instructions](#docker-container-instructions).
 7. For the details about the scripts and their respective arguments, please see [Script-specific instructions](#script-specific-instructions).
