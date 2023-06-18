@@ -127,7 +127,7 @@ This command will use the Spark session configuration specified in `config.ini`,
 | `json2parquet.py`        | high          | 50                                   |
 |                          | medium        | 60                                   |
 |                          | low           | 90                                   |
-| `clanup_disambiguate.py` | high          |                                      |
+| `clanup_disambiguate.py` | high          | 60                                   |
 |                          | medium        |                                      |
 |                          | low           | 150                                  |
 
