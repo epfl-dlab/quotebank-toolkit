@@ -76,7 +76,7 @@ For example:
 python json2parquet.py \
         --spark-config config.ini \
         --json data/quotes \
-        --parquet data/quotes_parquet
+        --parquet data/quotes_parquet.parquet
 ```
 This command will use Spark configuration specified in `config.ini`, read the quotes stored in `data/quotes`, and write the resulting data in Parquet format to `data/quotes_parquet`
 
@@ -110,12 +110,12 @@ For example:
 ```
 python cleanup_disambiguate.py \
 	--spark-config config.ini \
-	--input data/quotes_parquet \
-	--output data/quotes_clean_parquet \
+	--input data/quotes_parquet.parquet \
+	--output data/quotes_clean_parquet.parquet \
 	--input_format parquet \
 	--output_format parquet \
-	--disambiguation-mapping data/quotebank_disambiguation_mapping \
-	--self-quotations-filtered data/self_quotations_filtered \
+	--disambiguation-mapping data/quotebank_disambiguation_mapping.parquet \
+	--self-quotations-filtered data/self_quotations_filtered.parquet \
 	--blacklists data/blacklists \
 	--min-quotation-length 5
 ```
