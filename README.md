@@ -131,7 +131,7 @@ This command will use the Spark session configuration specified in `config.ini`,
 |                          | medium        |                                      |
 |                          | low           | 150                                  |
 
-Inference times in the table are estimated using the example arguments as shown above on Intel Xeon E5-2680 v3 @ 2.50GHz. The "high", "medium", and "low" values in the "Configuration" column correspond to Spark configurations given with `config_high.ini`, `config_medium.ini`, `config_low.ini`.
+Inference times in the table are estimated using the example arguments as shown above on Intel Xeon E5-2680 v3 @ 2.50GHz. The "high", "medium", and "low" values in the "Configuration" column correspond to Spark configurations given in `config_high.ini`, `config_medium.ini`, `config_low.ini`, respectively.
 
 ## References
 [1] Timoté Vaucher, Andreas Spitz, Michele Catasta, and Robert West. “Quotebank: A Corpus of Quotations from a Decade of News”. In Proceedings of the 14th ACM International Conference on Web Search and Data Mining. 2021.
