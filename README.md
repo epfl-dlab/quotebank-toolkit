@@ -128,7 +128,7 @@ This command will use the Spark session configuration specified in `config.ini`,
 |                          | medium        | 60                                   |
 |                          | low           | 90                                   |
 | `clanup_disambiguate.py` | high          | 60                                   |
-|                          | medium        |                                      |
+|                          | medium        | 80                                   |
 |                          | low           | 150                                  |
 
 Inference times in the table are estimated using the example arguments as shown above on Intel Xeon E5-2680 v3 @ 2.50GHz. The "high", "medium", and "low" values in the "Configuration" column correspond to Spark configurations given in `config_high.ini`, `config_medium.ini`, `config_low.ini`, respectively.
