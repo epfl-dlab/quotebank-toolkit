@@ -67,7 +67,7 @@ python json2parquet.py \
         --json JSON_DATA \
         --parquet PARQUET_DATA
 ```
-- `SPARK_CONFIG` - Path to the file configuring a Spark session. For details about configuring Spark sessions, please see [the official documentation](https://spark.apache.org/docs/latest/configuration.html#application-properties). This should provide you with enough information to configure the Spark sessions according to your needs. You can add options to the config file according to the [Application properties table](https://spark.apache.org/docs/latest/configuration.html#application-properties) in the documentation. The only option in the provided config file not mentioned in the official documentation is `num_threads`, whose name is self-explanatory. It merely sets the maximum number of processor threads usable by the script. In the files [`config_low.ini`](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/config_low.ini), [`config_medium.ini`](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/config_medium.ini) and [`config_high.ini`](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/config_high.ini), you can find example Spark configurations for low, medium, and high resource usage, respectively. You can see the running times for each script with each configuration in the [Running times table](#running-times-table) at the end of this README. Below are the approximate running times for each of the configurations measured on Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz.
+- `SPARK_CONFIG` - Path to the file configuring a Spark session. For details about configuring Spark sessions, please see [the official documentation](https://spark.apache.org/docs/latest/configuration.html#application-properties). This should provide you with enough information to configure the Spark sessions according to your needs. You can add options to the config file according to the [Application properties table](https://spark.apache.org/docs/latest/configuration.html#application-properties) in the documentation. The only option in the provided config file not mentioned in the official documentation is `num_threads`, whose name is self-explanatory. It merely sets the maximum number of processor threads usable by the script. In the files [`config_low.ini`](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/config_low.ini), [`config_medium.ini`](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/config_medium.ini) and [`config_high.ini`](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/config_high.ini), you can find example Spark configurations for low, medium, and high resource usage, respectively. You can see the running times for each script with each configuration in the [Running times table](#running-times-table) at the end of this README.
 - `JSON_DATA` - Path to the file with Quotebank data in JSON format.
 - `PARQUET_DATA` - Path where Quotebank will be saved in Parquet format. 
 
@@ -122,15 +122,15 @@ python cleanup_disambiguate.py \
 This command will use the Spark session configuration specified in `config.ini`, read the quotes stored in Parquet format in `data/quotes_parquet`, and write the resulting data in Parquet format to `data/quotes_clean_parquet`. For speaker disambiguation and self-quotation removal, the data from `data/quotebank_disambiguation_mapping_quote` and `data/self_quotations_filtered.parquet` will be used, respectively. The blacklists will be loaded from `data/blacklists`, while all the quotations with less than 5 Penn Treebank tokens will be removed. The resulting dataset will not be compressed as nothing was passed to the `compression` argument. Note that the proposed preprocessing steps can only clean up Quotenank partially, and a portion of faulty and falsely attributed quotations will remain in the dataset.
 
 ## Running times table
-| Script                   | Config | Approximate running time in minutes  |
-|--------------------------|--------|--------------------------------------|
-| `json2parquet.py`        | high   | 50                                   |
-|                          | medium | 60                                   |
-|                          | low    | 90                                   |
-| `clanup_disambiguate.py` | high   |                                      |
-|                          | medium |                                      |
-|                          | low    | 150                                  |
-
+| Script                   | Configuration | Approximate running time in minutes  |
+|--------------------------|---------------|--------------------------------------|
+| `json2parquet.py`        | high          | 50                                   |
+|                          | medium        | 60                                   |
+|                          | low           | 90                                   |
+| `clanup_disambiguate.py` | high          |                                      |
+|                          | medium        |                                      |
+|                          | low           | 150                                  |
+Inference times in the table are estimated using the example arguments as shown above on Intel Xeon E5-2680 v3 @ 2.50GHz. The "high", "medium", and "low" values in the "Configuration" column correspond to Spark configurations given with `config_high.ini`, `config_medium.ini`, `config_low.ini`.
 
 ## References
 [1] Timoté Vaucher, Andreas Spitz, Michele Catasta, and Robert West. “Quotebank: A Corpus of Quotations from a Decade of News”. In Proceedings of the 14th ACM International Conference on Web Search and Data Mining. 2021.
