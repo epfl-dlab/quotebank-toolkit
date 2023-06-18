@@ -8,7 +8,7 @@ This repository contains utility scripts for preprocessing [Quotebank](https://z
 		- where the speaker name is identified as spurious (see [`data/blacklists/name_blacklist.txt`](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/data/blacklists/name_blacklist.txt))
 		- that appear only on domains identified as faulty (see [`data/blacklists/domain_blacklist.txt`](https://github.com/epfl-dlab/quotebank-toolkit/blob/main/data/blacklists/domain_blacklist.txt))
 		- mentioning the speaker to which they are attributed (self-quotations) by joining Quotebank with `self_quotations_filtered`
-	- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping_quote.parquet`. Due to the size of the dataset, speaker disambiguation mapping has been obtained using lightweight heuristics [2].
+	- speaker disambiguation by joining Quotebank with `data/quotebank_disambiguation_mapping_quote.parquet` (see the instructions below to get the data). Due to the size of the dataset, speaker disambiguation mapping has been obtained using lightweight heuristics [2].
 
 ## Usage instructions
 1. Clone this repository by running
